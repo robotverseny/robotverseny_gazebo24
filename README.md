@@ -12,7 +12,7 @@ colcon build --symlink-install --packages-select robotverseny_application robotv
 
 
 ``` bash
-export IGN_GAZEBO_RESOURCE_PATH=~/ros2_ws/src/robotverseny/robotverseny_description/models:${IGN_GAZEBO_RESOURCE_PATH}
+export IGN_GAZEBO_RESOURCE_PATH=~/ros2_ws/installrobotverseny_gazebo/share/robotverseny_gazebo/worlds:/~ros2_ws/install/robotverseny_description/share:${IGN_GAZEBO_RESOURCE_PATH}
 ```
 
 ``` bash

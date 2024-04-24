@@ -150,7 +150,7 @@
       <pose>0 0 0 1.5707 0 0</pose>
       <static>true</static>
       <link name="road">
-        <collision name="collision">
+        <collision name="track_road_collision">
           <geometry>
             <mesh>
               <scale>2 2 2</scale>
@@ -165,20 +165,13 @@
             </friction>
           </surface>
         </collision>
-        <visual name="visual">
+        <visual name="track_road_visual">
           <geometry>
             <mesh>
               <scale>2 2 2</scale>
               <uri>model://meshes/track_road.dae</uri>
             </mesh>
           </geometry>
-          <material>
-            <pbr>
-              <metal>
-                <albedo_map>model://meshes/textures/concrete.png</albedo_map>
-              </metal>
-            </pbr>
-          </material>
         </visual>
       </link>
     </model>

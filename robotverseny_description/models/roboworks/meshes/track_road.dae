@@ -16,46 +16,48 @@
     <up_axis>Y_UP</up_axis>
   </asset>
   <library_materials>
-    <material id="FBXASC05055_255_255" name="FBXASC05055_255_255">
-      <instance_effect url="#FBXASC05055_255_255-fx"/>
+    <material id="AsphaltMaterial" name="AsphaltMaterial">
+        <instance_effect url="#AsphaltMaterial-fx"/>
     </material>
-  </library_materials>
-  <library_effects>
-    <effect id="FBXASC05055_255_255-fx" name="FBXASC05055_255_255">
-      <profile_COMMON>
-        <technique sid="standard">
-          <phong>
-            <emission>
-              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
-            </emission>
-            <ambient>
-              <color sid="ambient">1.000000  1.000000 1.000000 1.000000</color>
-            </ambient>
-            <diffuse>
-              <texture texture="MapFBXASC032FBXASC0354-image" texcoord="CHANNEL0">
-                <extra>
-                  <technique profile="MAYA">
-                    <wrapU sid="wrapU0">TRUE</wrapU>
-                    <wrapV sid="wrapV0">TRUE</wrapV>
-                    <blend_mode>ADD</blend_mode>
-                  </technique>
-                </extra>
-              </texture>
-            </diffuse>
-            <specular>
-              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
-            </specular>
-            <shininess>
-              <float sid="shininess">1.000000</float>
-            </shininess>
-            <transparency>
-              <float sid="transparency">0.000000</float>
-            </transparency>
-          </phong>
-        </technique>
-      </profile_COMMON>
+</library_materials>
+
+<library_effects>
+    <effect id="AsphaltMaterial-fx" name="AsphaltMaterial">
+        <profile_COMMON>
+            <technique sid="standard">
+                <phong>
+                    <emission>
+                        <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+                    </emission>
+                    <ambient>
+                        <color sid="ambient">1.000000  1.000000 1.000000 1.000000</color>
+                    </ambient>
+                    <diffuse>
+                        <texture texture="AsphaltTexture" texcoord="CHANNEL0">
+                            <extra>
+                                <technique profile="MAYA">
+                                    <wrapU sid="wrapU0">TRUE</wrapU>
+                                    <wrapV sid="wrapV0">TRUE</wrapV>
+                                    <blend_mode>ADD</blend_mode>
+                                </technique>
+                            </extra>
+                        </texture>
+                    </diffuse>
+                    <specular>
+                        <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+                    </specular>
+                    <shininess>
+                        <float sid="shininess">0.000000</float>
+                    </shininess>
+                    <transparency>
+                        <float sid="transparency">0.000000</float>
+                    </transparency>
+                </phong>
+            </technique>
+        </profile_COMMON>
     </effect>
-  </library_effects>
+</library_effects>
+
   <library_geometries>
     <geometry id="Road-lib" name="RoadMesh">
       <mesh>
