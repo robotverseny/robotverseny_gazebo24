@@ -98,7 +98,7 @@
       </link>
 
       <link name='front_right_wheel'>
-        <pose>0.3187 -0.161 0 1.5707 0 0</pose>
+        <pose>0.3187 -0.161 0 -1.5707 0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -111,6 +111,7 @@
           </inertia>
         </inertial>
         <visual name='visual_front_right_wheel'>
+          <pose>0 0 0 -3.1415 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://meshes/wheel.dae</uri>
@@ -218,7 +219,7 @@
       </link>
 
       <link name='rear_right_wheel'>
-        <pose>0 -0.161 0 1.5707 0 0</pose>
+        <pose>0 -0.161 0 -1.5707 0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -231,6 +232,7 @@
           </inertia>
         </inertial>
         <visual name='visual_rear_right_wheel'>
+          <pose>0 0 0 3.1415 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://meshes/wheel.dae</uri>
@@ -297,7 +299,6 @@
       <link name="front_right_wheel_steering_link">
         <pose>0.3187 -0.131 0 0 0 0</pose>
         <visual name="front_right_wheel_steering_link_visual">
-          <pose>0 0 0 0 0 0</pose>
           <geometry>
             <cylinder>
               <length>0.05</length>
@@ -484,7 +485,7 @@
         <wheel_separation>0.3187</wheel_separation>
         <wheel_radius>0.0625</wheel_radius>
         <odom_publish_frequency>1</odom_publish_frequency>
-        <!--!topic>model/roboworks/cmd_vel</topic-->
+        <topic>model/roboworks/cmd_vel</topic>
         <min_velocity>-2</min_velocity>
         <max_velocity>2</max_velocity>
         <min_acceleration>-0.1</min_acceleration>
