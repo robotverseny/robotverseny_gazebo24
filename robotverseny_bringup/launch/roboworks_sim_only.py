@@ -100,5 +100,5 @@ def generate_launch_description():
         bridge,
         robot_state_publisher,
         path_and_steer,
-        rviz
+        # rviz
     ])
