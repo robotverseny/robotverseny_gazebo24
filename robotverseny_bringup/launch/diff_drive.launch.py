@@ -21,7 +21,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, TextSubstitution
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 
 from launch_ros.actions import Node
 
@@ -30,32 +30,26 @@ def generate_launch_description():
     # Configure ROS nodes for launch
 
     # Setup project paths
-    pkg_project_bringup = get_package_share_directory('robotverseny_bringup')
-    pkg_project_gazebo = get_package_share_directory('robotverseny_gazebo')
-    pkg_project_description = get_package_share_directory('robotverseny_description')
+    pkg_project_bringup = get_package_share_directory('ros_gz_example_bringup')
+    pkg_project_gazebo = get_package_share_directory('ros_gz_example_gazebo')
+    pkg_project_description = get_package_share_directory('ros_gz_example_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_project_description, 'models', 'roboworks', 'model.sdf')
+    sdf_file  =  os.path.join(pkg_project_description, 'models', 'diff_drive', 'model.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
-
-    sdf_path = PathJoinSubstitution([
-            pkg_project_gazebo,
-            'worlds',
-            'roboworks.sdf', 
-        ])
-    unpaused = TextSubstitution(text='r') 
-    gz_args_concat = [sdf_path] ## TODO: merge unpaused and sdf_path
-    print(type(sdf_path))
 
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': gz_args_concat}.items())
-    ## -r means to run the simulation unpaused
-
+        launch_arguments={'gz_args': PathJoinSubstitution([
+            pkg_project_gazebo,
+            'worlds',
+            'diff_drive.sdf'
+        ])}.items(),
+    )
 
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
     robot_state_publisher = Node(
@@ -73,7 +67,7 @@ def generate_launch_description():
     rviz = Node(
        package='rviz2',
        executable='rviz2',
-       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'robotverseny.rviz')],
+       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'diff_drive.rviz')],
        condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
@@ -82,7 +76,7 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         parameters=[{
-            'config_file': os.path.join(pkg_project_bringup, 'config', 'robotverseny_bridge.yaml'),
+            'config_file': os.path.join(pkg_project_bringup, 'config', 'ros_gz_example_bridge.yaml'),
             'qos_overrides./tf_static.publisher.durability': 'transient_local',
         }],
         output='screen'
