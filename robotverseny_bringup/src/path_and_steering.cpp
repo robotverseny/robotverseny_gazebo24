@@ -25,36 +25,41 @@ class PathAndSteer : public rclcpp::Node
 public:
     PathAndSteer() : Node("path_steering_kmph_node")
     {
-        this->declare_parameter<std::string>("pose_topic", "lexus3/current_pose");
-        this->declare_parameter<std::string>("pose_frame", "map");
+
+        this->declare_parameter<std::string>("pose_frame", "roboworks/chassis");
         this->declare_parameter<std::string>("marker_topic", "marker_steering");
         this->declare_parameter<std::string>("path_topic", "marker_path");
         this->declare_parameter<std::string>("marker_color", "y");
+        this->declare_parameter<std::string>("cmd_topic", "cmd_vel");
+        this->declare_parameter<std::string>("map_frame", "roboworks/odom");
+        this->declare_parameter<std::string>("marker_frame", "roboworks/chassis");
         this->declare_parameter<bool>("publish_steer_marker", true);
         this->declare_parameter<bool>("publish_kmph", true);
         this->declare_parameter<int>("path_size", 1500);
 
-        this->get_parameter("pose_topic", pose_topic);
         this->get_parameter("pose_frame", pose_frame);
         this->get_parameter("marker_topic", marker_topic);
         this->get_parameter("path_topic", path_topic);
+        this->get_parameter("cmd_topic", cmd_topic);
+        this->get_parameter("map_frame", current_map);
+        this->get_parameter("marker_frame", marker_frame);
         this->get_parameter("marker_color", marker_color);
         this->get_parameter("publish_steer_marker", publish_steer_marker);
         this->get_parameter("path_size", path_size);
         this->get_parameter("publish_kmph", publish_kmph);
 
+
         tf_buffer_ = std::make_unique<tf2_ros::Buffer>(this->get_clock());
         tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
         if (publish_kmph)
         {
-            sub_cmd_ = this->create_subscription<geometry_msgs::msg::Twist>("roboworks/cmd_vel", 10, std::bind(&PathAndSteer::vehicleSteeringCallback, this, _1));
+            sub_cmd_ = this->create_subscription<geometry_msgs::msg::Twist>(cmd_topic, 10, std::bind(&PathAndSteer::vehicleSteeringCallback, this, _1));
         }
-        // sub_current_pose_ = this->create_subscription<geometry_msgs::msg::PoseStamped>(pose_topic, 10, std::bind(&PathAndSteer::vehiclePoseCallback, this, _1));
-        marker_pub = this->create_publisher<visualization_msgs::msg::Marker>(marker_topic, 1);
+        marker_pub = this->create_publisher<visualization_msgs::msg::Marker>(marker_topic, 20);
         path_pub = this->create_publisher<nav_msgs::msg::Path>(path_topic, 1);
         // Call loop function 20 Hz (50 milliseconds)
         timer_ = this->create_wall_timer(std::chrono::milliseconds(50), std::bind(&PathAndSteer::loop, this));
-        RCLCPP_INFO_STREAM(this->get_logger(), "Node started: " << this->get_name() << " subscribed: " << pose_topic << " publishing: " << marker_topic << " " << path_topic);
+        RCLCPP_INFO_STREAM(this->get_logger(), "Node started: " << this->get_name() << " publishing: " << marker_topic << " " << path_topic);
     }
 
 private:
@@ -78,7 +83,7 @@ private:
         geometry_msgs::msg::TransformStamped transformStamped;
         try
         {
-            transformStamped = tf_buffer_->lookupTransform("map", pose_frame, tf2::TimePointZero);
+            transformStamped = tf_buffer_->lookupTransform(current_map, pose_frame, tf2::TimePointZero); // TODO: parameterize
         }
 
         catch (const tf2::TransformException &ex)
@@ -104,10 +109,9 @@ private:
         if (publish_steer_marker)
         {
             visualization_msgs::msg::Marker steer_marker;
-            steer_marker.header.frame_id = "roboworks/lidar_link"; // TODO: parameterize
+            steer_marker.header.frame_id = marker_frame; 
             steer_marker.header.stamp = this->now();
             steer_marker.ns = "steering_path";
-            steer_marker.id = 0;
             steer_marker.type = steer_marker.LINE_STRIP;
             steer_marker.action = visualization_msgs::msg::Marker::MODIFY;
             steer_marker.pose.position.x = 0;
@@ -162,7 +166,6 @@ private:
                 steer_marker.color.b = 0.07f;
             }
             steer_marker.color.a = 1.0;
-            steer_marker.lifetime = rclcpp::Duration::from_seconds(0.05);
             steer_marker.ns = "steering_path";
             double marker_pos_x = 0.0, marker_pos_y = 0.0, theta = 0.0;
             for (int i = 0; i < 100; i++)
@@ -176,14 +179,13 @@ private:
                 steer_marker.points.push_back(p);
             }
             marker_pub->publish(steer_marker);
-            steer_marker.points.clear();
+            // steer_marker.points.clear();
         }
         geometry_msgs::msg::PoseStamped pose;
 
         pose.header.stamp = this->now();
         if ((actual_pose.pose.position.x > 0.001 || actual_pose.pose.position.x < -0.001) && !std::isnan(actual_pose.pose.position.y) && !std::isinf(actual_pose.pose.position.y))
         {
-            current_map = "map";
             pose.pose.position = actual_pose.pose.position;
             pose.pose.position.z = actual_pose.pose.position.z;
             pose.header.frame_id = current_map;
@@ -205,7 +207,7 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr sub_cmd_;
     rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr sub_current_pose_;
-    std::string pose_topic, marker_topic, path_topic, pose_frame;
+    std::string marker_topic, path_topic, pose_frame, marker_frame, cmd_topic;
     const double wheelbase = 2.789;
     double steering_angle, vehicle_speed_mps;
     long unsigned int path_size;

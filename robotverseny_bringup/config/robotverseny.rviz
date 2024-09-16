@@ -7,6 +7,7 @@ Panels:
         - /Global Options1
         - /debug marker1
         - /debug marker1/Namespaces1
+        - /Path1/Offset1
         - /steering1
       Splitter Ratio: 0.5852941274642944
     Tree Height: 725
@@ -284,13 +285,13 @@ Visualization Manager:
     - Alpha: 1
       Buffer Length: 1
       Class: rviz_default_plugins/Path
-      Color: 25; 255; 0
-      Enabled: false
+      Color: 255; 34; 122
+      Enabled: true
       Head Diameter: 0.30000001192092896
       Head Length: 0.20000000298023224
       Length: 0.30000001192092896
-      Line Style: Lines
-      Line Width: 0.029999999329447746
+      Line Style: Billboards
+      Line Width: 0.10000000149011612
       Name: Path
       Offset:
         X: 0
@@ -308,7 +309,7 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /marker_path
-      Value: false
+      Value: true
     - Class: rviz_default_plugins/Marker
       Enabled: true
       Name: steering
@@ -368,7 +369,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/ThirdPersonFollower
-      Distance: 31.50643539428711
+      Distance: 11.231344223022461
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -383,10 +384,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8603981137275696
-      Target Frame: roboworks/lidar_link
+      Pitch: 0.7753980755805969
+      Target Frame: <Fixed Frame>
       Value: ThirdPersonFollower (rviz_default_plugins)
-      Yaw: 3.1653971672058105
+      Yaw: 3.160398006439209
     Saved: ~
 Window Geometry:
   Displays:
@@ -404,5 +405,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 925
-  X: 1300
+  X: 1513
   Y: -32

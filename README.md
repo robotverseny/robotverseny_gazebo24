@@ -38,6 +38,12 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch robotverseny_bringup roboworks.launch.py
 ```
 
+or without rviz:
+
+``` bash
+ros2 launch robotverseny_bringup roboworks.launch.py rviz:=false
+```
+
 > [!WARNING]  
 > The command `export IGN_GAZEBO_RESOURCE_PATH=` or `export IGN_GAZEBO_MODEL_PATH=` will delete your previous paths.
 

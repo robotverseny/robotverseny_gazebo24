@@ -21,9 +21,10 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, TextSubstitution
+from launch.substitutions import LaunchConfiguration
 
 from launch_ros.actions import Node
+from launch.actions import TimerAction
 
 
 def generate_launch_description():
@@ -63,42 +64,63 @@ def generate_launch_description():
         ]
     )
 
-    # Visualize in RViz
-    rviz = Node(
-       package='rviz2',
-       executable='rviz2',
-       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'robotverseny.rviz')],
-       condition=IfCondition(LaunchConfiguration('rviz'))
+    # Visualize in RViz with TimerAction to delay starting the node by X seconds (period)
+    rviz = TimerAction(
+        period=4.0,
+        actions=[
+            Node(
+                package='rviz2',
+                executable='rviz2',
+                arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'robotverseny.rviz')],
+                condition=IfCondition(LaunchConfiguration('rviz')),
+                parameters=[
+                    {'use_sim_time': True},
+                ]
+            )
+        ]
     )
 
     # Bridge ROS topics and Gazebo messages for establishing communication
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        parameters=[{
+        parameters=[
+            {
             'config_file': os.path.join(pkg_project_bringup, 'config', 'robotverseny_bridge.yaml'),
             'qos_overrides./tf_static.publisher.durability': 'transient_local',
-        }],
+            },
+            {'use_sim_time': True},
+        ],
         output='screen'
     )
 
-    path_and_steer = Node(
-        package='robotverseny_bringup',
-        executable='path_and_steering',
-        output='screen',
-        parameters=[
-            {'publish_steer_marker': True}, 
-            {'marker_topic': 'roboworks/steer_marker'},
-            {'marker_color': 'g'},
+    # Steering and path visualization in RViz with TimerAction to delay starting the node by X seconds (period)
+    path_and_steer = TimerAction(
+        period=3.0,
+        actions=[
+            Node(
+            package='robotverseny_bringup',
+            executable='path_and_steering',
+            output='screen',
+            parameters=[
+                {'publish_steer_marker': True}, 
+                {'marker_topic': 'roboworks/steer_marker'},
+                {'marker_color': 'g'},
+                {'map_frame': 'roboworks/odom'},
+                {'marker_frame': 'roboworks/lidar_link'},
+                {'cmd_topic': 'roboworks/cmd_vel'},
+                {'use_sim_time': True},
+                ]
+            )
         ]
     )
 
     return LaunchDescription([
         gz_sim,
-        DeclareLaunchArgument('rviz', default_value='true',
-                              description='Open RViz.'),
+        DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,
         robot_state_publisher,
         path_and_steer,
         rviz
     ])
+
