@@ -43,6 +43,12 @@ or without rviz:
 ``` bash
 ros2 launch robotverseny_bringup roboworks.launch.py rviz:=false
 ```
+> [!TIP]
+> ## Rviz 2d overlay
+
+>``` r
+>sudo apt install ros-humble-rviz-2d-overlay*
+>```
 
 > [!WARNING]  
 > The command `export IGN_GAZEBO_RESOURCE_PATH=` or `export IGN_GAZEBO_MODEL_PATH=` will delete your previous paths.
