@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 <sdf version="1.8">
     <model name='roboworks'>
+
+      <link name='base_link'>
+        <pose>0 0 0 0 0 0</pose>
+      </link>
+
       <link name='chassis'>
         <pose>0 0 0 0 0 0</pose>
         <inertial>
@@ -18,7 +23,7 @@
           <pose>0 0 0 1.5707 0 0</pose>
           <geometry>
             <mesh>
-              <uri>model://meshes/chassis.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/chassis.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -53,7 +58,7 @@
         <visual name='visual_front_left_wheel'>
           <geometry>
             <mesh>
-              <uri>model://meshes/wheel.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -86,7 +91,7 @@
         <visual name='visual_front_left_tire'>
           <geometry>
             <mesh>
-              <uri>model://meshes/tire.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -114,7 +119,7 @@
           <pose>0 0 0 -3.1415 0 0</pose>
           <geometry>
             <mesh>
-              <uri>model://meshes/wheel.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -147,7 +152,7 @@
         <visual name='visual_front_right_tire'>
           <geometry>
             <mesh>
-              <uri>model://meshes/tire.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -174,7 +179,7 @@
         <visual name='visual_rear_left_wheel'>
           <geometry>
             <mesh>
-              <uri>model://meshes/wheel.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -207,7 +212,7 @@
         <visual name='visual_rear_left_tire'>
           <geometry>
             <mesh>
-              <uri>model://meshes/tire.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -235,7 +240,7 @@
           <pose>0 0 0 3.1415 0 0</pose>
           <geometry>
             <mesh>
-              <uri>model://meshes/wheel.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -268,7 +273,7 @@
         <visual name='visual_rear_right_tire'>
           <geometry>
             <mesh>
-              <uri>model://meshes/tire.dae</uri>
+              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -312,6 +317,38 @@
         </visual>
       </link>
 
+      <link name="camera_link">
+        <pose>0.28 0 0.07 0 0 0</pose>
+        <sensor name="my_rgbd_camera" type="rgbd_camera">
+          <pose>0 0 0 0 0 0</pose>
+          <update_rate>30</update_rate>
+          <camera>
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <depth_camera>
+            <clip>
+              <near>0.1</near>
+              <far>10</far>
+            </clip>
+          </depth_camera>
+        </sensor>
+      </link>
+
+
+
+      <link name="laser_frame">
+        <pose>0.25 0 0.094 0 0 0</pose>
+      </link>
+
       <link name="lidar_link">
         <pose>0.25 0 0.094 0 0 0</pose>
         <inertial>
@@ -341,7 +378,7 @@
         <sensor name='gpu_lidar' type='gpu_lidar'>
           <pose>0 0 0 0 0 0</pose>
           <topic>scan</topic>
-          <ignition_frame_id>roboworks/lidar_link</ignition_frame_id>
+          <ignition_frame_id>laser_frame</ignition_frame_id>
           <update_rate>10</update_rate>
           <lidar>
             <scan>
@@ -368,8 +405,23 @@
         </sensor>
       </link>
 
+      <joint name='camera_joint' type='fixed'>
+        <parent>base_link</parent>
+        <child>camera_link</child>
+      </joint>
+
+      <joint name='lidar_frame_joint' type='fixed'>
+        <parent>base_link</parent>
+        <child>laser_frame</child>
+      </joint>
+
+      <joint name='base_link_joint' type='fixed'>
+        <parent>base_link</parent>
+        <child>chassis</child>
+      </joint>
+      
       <joint name='lidar_joint' type='fixed'>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <child>lidar_link</child>
       </joint>
 
@@ -395,7 +447,7 @@
 
       <joint name="front_left_wheel_steering_joint" type="revolute">
         <child>front_left_wheel_steering_link</child>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <axis>
           <xyz>0 0 1</xyz>
           <limit>
@@ -409,7 +461,7 @@
       </joint>
 
       <joint name="front_right_wheel_steering_joint" type="revolute">
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <child>front_right_wheel_steering_link</child>
         <axis>
           <xyz>0 0 1</xyz>
@@ -447,7 +499,7 @@
       </joint>
 
       <joint name='rear_left_wheel_joint' type='revolute'>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <child>rear_left_wheel</child>
         <axis>
           <xyz>0 0 1</xyz>
@@ -459,7 +511,7 @@
       </joint>
 
       <joint name='rear_right_wheel_joint' type='revolute'>
-        <parent>chassis</parent>
+        <parent>base_link</parent>
         <child>rear_right_wheel</child>
         <axis>
           <xyz>0 0 1</xyz>
@@ -485,7 +537,7 @@
         <wheel_separation>0.3187</wheel_separation>
         <wheel_radius>0.0625</wheel_radius>
         <odom_publish_frequency>1</odom_publish_frequency>
-        <topic>model/roboworks/cmd_vel</topic>
+        <topic>roboworks/cmd_vel</topic>
         <min_velocity>-2</min_velocity>
         <max_velocity>2</max_velocity>
         <min_acceleration>-0.1</min_acceleration>

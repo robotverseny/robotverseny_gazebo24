@@ -77,14 +77,14 @@
     </model>
 
     <model name="track_wall">
-      <pose>0 0 0 1.5707 0 0</pose>
+      <pose>0 0 0.1 1.570796 0 0</pose>
       <static>true</static>
       <link name="track">
         <collision name="collision">
           <geometry>
             <mesh>
-              <scale>2 2 2</scale>
-              <uri>model://meshes/track_walls.dae</uri>
+              <scale>1 1 1</scale>
+              <uri>package://robotverseny_description/models/roboworks/meshes/T1_OW.obj</uri>
             </mesh>
           </geometry>
           <surface>
@@ -98,28 +98,23 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <scale>2 2 2</scale>
-              <uri>model://meshes/track_walls.dae</uri>
+              <scale>1 1 1</scale>
+              <uri>package://robotverseny_description/models/roboworks/meshes/T1_OW.obj</uri>
             </mesh>
           </geometry>
-          <material>
-            <ambient>0.8 0.8 0.8 1</ambient>
-            <diffuse>0.8 0.8 0.8 1</diffuse>
-            <specular>0.8 0.8 0.8 1</specular>
-          </material>
         </visual>
       </link>
     </model>
 
     <model name="track_stripes">
-      <pose>0 0 0 1.5707 0 0</pose>
+      <pose>0 0 0.1 1.570796 0 0</pose>
       <static>true</static>
       <link name="stripes">
         <collision name="collision">
           <geometry>
             <mesh>
-              <scale>2 2 2</scale>
-              <uri>model://meshes/track_stripes.dae</uri>
+              <scale>1 1 1</scale>
+              <uri>package://robotverseny_description/models/roboworks/meshes/T1_L.obj</uri>
             </mesh>
           </geometry>
           <surface>
@@ -133,28 +128,23 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <scale>2 2 2</scale>
-              <uri>model://meshes/track_stripes.dae</uri>
+              <scale>1 1 1</scale>
+              <uri>package://robotverseny_description/models/roboworks/meshes/T1_L.obj</uri>
             </mesh>
           </geometry>
-          <material>
-            <ambient>0.8 0.8 0.8 1</ambient>
-            <diffuse>0.8 0.8 0.8 1</diffuse>
-            <specular>0.8 0.8 0.8 1</specular>
-          </material>
         </visual>
       </link>
     </model>
 
     <model name="track_road">
-      <pose>0 0 0 1.5707 0 0</pose>
+      <pose>0 0 0.1 1.570796 0 0</pose>
       <static>true</static>
       <link name="road">
         <collision name="track_road_collision">
           <geometry>
             <mesh>
-              <scale>2 2 2</scale>
-              <uri>model://meshes/track_road.dae</uri>
+              <scale>1 1 1</scale>
+              <uri>package://robotverseny_description/models/roboworks/meshes/T1_R.obj</uri>
             </mesh>
           </geometry>
           <surface>
@@ -168,8 +158,8 @@
         <visual name="track_road_visual">
           <geometry>
             <mesh>
-              <scale>2 2 2</scale>
-              <uri>model://meshes/track_road.dae</uri>
+              <scale>1 1 1</scale>
+              <uri>package://robotverseny_description/models/roboworks/meshes/T1_R.obj</uri>
             </mesh>
           </geometry>
         </visual>
@@ -178,7 +168,7 @@
 
     <model name="roboworks">
       <self_collide>true</self_collide>
-      <pose>-4.5 -3 0.0625 0 -0 1.5707</pose>
+      <pose>0.0 1.0 0.0625 0 -0 3.141596</pose>
       <include merge="true">
         <uri>package://robotverseny_description/models/roboworks</uri>
       </include>
@@ -200,8 +190,8 @@
       <plugin
         filename="ignition-gazebo-odometry-publisher-system"
         name="ignition::gazebo::systems::OdometryPublisher">
-        <odom_frame>roboworks/odom</odom_frame>
-        <robot_base_frame>roboworks</robot_base_frame>
+        <odom_frame>map_roboworks</odom_frame>
+        <robot_base_frame>base_link</robot_base_frame>
       </plugin>
     </model>
 

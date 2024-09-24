@@ -106,8 +106,8 @@ def generate_launch_description():
                 {'publish_steer_marker': True}, 
                 {'marker_topic': 'roboworks/steer_marker'},
                 {'marker_color': 'g'},
-                {'map_frame': 'roboworks/odom'},
-                {'marker_frame': 'roboworks/lidar_link'},
+                {'map_frame': 'map_roboworks'},
+                {'marker_frame': 'lidar_link'},
                 {'cmd_topic': 'roboworks/cmd_vel'},
                 {'use_sim_time': True},
                 ]
