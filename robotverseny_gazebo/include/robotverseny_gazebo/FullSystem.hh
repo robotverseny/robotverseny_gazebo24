@@ -18,60 +18,38 @@
 #ifndef ROBOTVERSENY_GAZEBO__FULL_SYSTEM_HH_
 #define ROBOTVERSENY_GAZEBO__FULL_SYSTEM_HH_
 
-// The only required include in the header is this one.
-// All others will depend on what your plugin does.
-#include <gz/sim/EventManager.hh>
-#include <gz/sim/System.hh>
+// Includes for Ignition Gazebo Citadel
+#include <ignition/gazebo/EventManager.hh>
+#include <ignition/gazebo/System.hh>
 
 namespace robotverseny_gazebo
 {
-  // This is the main plugin's class. It must inherit from System and at least
-  // one other interface.
-  // Here we use `ISystemPostUpdate`, which is used to get results after
-  // physics runs. The opposite of that, `ISystemPreUpdate`, would be used by
-  // plugins that want to send commands.
+  // Main plugin class. It inherits from System and several other interfaces.
   class FullSystem:
-    public gz::sim::System,
-    public gz::sim::ISystemConfigure,
-    public gz::sim::ISystemPreUpdate,
-    public gz::sim::ISystemUpdate,
-    public gz::sim::ISystemPostUpdate
+    public ignition::gazebo::System,
+    public ignition::gazebo::ISystemConfigure,
+    public ignition::gazebo::ISystemPreUpdate,
+    public ignition::gazebo::ISystemUpdate,
+    public ignition::gazebo::ISystemPostUpdate
   {
-    // Plugins inheriting ISystemConfigure must implement the Configure 
-    // callback. This is called when a system is initially loaded. 
-    // The _entity variable contains the entity that the system is attached to
-    // The _element variable contains the sdf Element with custom configuration
-    // The _ecm provides an interface to all entities and components
-    // The _eventManager provides a mechanism for registering internal signals
+    // Implement the Configure callback for system initialization
     public: void Configure(
-                const gz::sim::Entity &_entity,
+                const ignition::gazebo::Entity &_entity,
                 const std::shared_ptr<const sdf::Element> &_element,
-                gz::sim::EntityComponentManager &_ecm,
-                gz::sim::EventManager &_eventManager) override;
+                ignition::gazebo::EntityComponentManager &_ecm,
+                ignition::gazebo::EventManager &_eventManager) override;
 
-    // Plugins inheriting ISystemPreUpdate must implement the PreUpdate
-    // callback. This is called at every simulation iteration before the physics
-    // updates the world. The _info variable provides information such as time,
-    // while the _ecm provides an interface to all entities and components in
-    // simulation.
-    public: void PreUpdate(const gz::sim::UpdateInfo &_info,
-                gz::sim::EntityComponentManager &_ecm) override;
+    // Implement the PreUpdate callback
+    public: void PreUpdate(const ignition::gazebo::UpdateInfo &_info,
+                ignition::gazebo::EntityComponentManager &_ecm) override;
 
-    // Plugins inheriting ISystemUpdate must implement the Update
-    // callback. This is called at every simulation iteration before the physics
-    // updates the world. The _info variable provides information such as time,
-    // while the _ecm provides an interface to all entities and components in
-    // simulation.
-    public: void Update(const gz::sim::UpdateInfo &_info,
-                gz::sim::EntityComponentManager &_ecm) override;
+    // Implement the Update callback
+    public: void Update(const ignition::gazebo::UpdateInfo &_info,
+                ignition::gazebo::EntityComponentManager &_ecm) override;
 
-    // Plugins inheriting ISystemPostUpdate must implement the PostUpdate
-    // callback. This is called at every simulation iteration after the physics
-    // updates the world. The _info variable provides information such as time,
-    // while the _ecm provides an interface to all entities and components in
-    // simulation.
-    public: void PostUpdate(const gz::sim::UpdateInfo &_info,
-                const gz::sim::EntityComponentManager &_ecm) override;
+    // Implement the PostUpdate callback
+    public: void PostUpdate(const ignition::gazebo::UpdateInfo &_info,
+                const ignition::gazebo::EntityComponentManager &_ecm) override;
 
   };
 }

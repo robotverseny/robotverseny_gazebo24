@@ -15,14 +15,14 @@
  *
 */
 
-// We'll use a string and the gzmsg command below for a brief example.
+// We'll use a string and the ignmsg command below for a brief example.
 // Remove these includes if your plugin doesn't need them.
 #include <string>
-#include <gz/common/Console.hh>
+#include <ignition/common/Console.hh>
 
 // This header is required to register plugins. It's good practice to place it
 // in the cc file, like it's done here.
-#include <gz/plugin/Register.hh>
+#include <ignition/plugin/Register.hh>
 
 // Don't forget to include the plugin's header.
 #include "robotverseny_gazebo/FullSystem.hh"
@@ -31,7 +31,7 @@
 // what's in the header.
 IGNITION_ADD_PLUGIN(
     robotverseny_gazebo::FullSystem,
-    gz::sim::System,
+    ignition::gazebo::System,
     robotverseny_gazebo::FullSystem::ISystemConfigure,
     robotverseny_gazebo::FullSystem::ISystemPreUpdate,
     robotverseny_gazebo::FullSystem::ISystemUpdate,
@@ -41,39 +41,39 @@ IGNITION_ADD_PLUGIN(
 namespace robotverseny_gazebo 
 {
 
-void FullSystem::Configure(const gz::sim::Entity &_entity,
+void FullSystem::Configure(const ignition::gazebo::Entity &_entity,
                 const std::shared_ptr<const sdf::Element> &_element,
-                gz::sim::EntityComponentManager &_ecm,
-                gz::sim::EventManager &_eventManager)
+                ignition::gazebo::EntityComponentManager &_ecm,
+                ignition::gazebo::EventManager &_eventManager)
 {
-  igndbg << "robotverseny_gazebo::FullSystem::Configure on entity: " << _entity << std::endl;
+  ignmsg << "robotverseny_gazebo::FullSystem::Configure on entity: " << _entity << std::endl;
 }
 
-void FullSystem::PreUpdate(const gz::sim::UpdateInfo &_info,
-                           gz::sim::EntityComponentManager &_ecm)
-{
-  if (!_info.paused && _info.iterations % 1000 == 0)
-  {
-    igndbg << "robotverseny_gazebo::FullSystem::PreUpdate" << std::endl;
-  }
-}
-
-void FullSystem::Update(const gz::sim::UpdateInfo &_info,
-                        gz::sim::EntityComponentManager &_ecm)
+void FullSystem::PreUpdate(const ignition::gazebo::UpdateInfo &_info,
+                           ignition::gazebo::EntityComponentManager &_ecm)
 {
   if (!_info.paused && _info.iterations % 1000 == 0)
   {
-    igndbg << "robotverseny_gazebo::FullSystem::Update" << std::endl;
+    ignmsg << "robotverseny_gazebo::FullSystem::PreUpdate" << std::endl;
   }
 }
 
-void FullSystem::PostUpdate(const gz::sim::UpdateInfo &_info,
-                            const gz::sim::EntityComponentManager &_ecm) 
+void FullSystem::Update(const ignition::gazebo::UpdateInfo &_info,
+                        ignition::gazebo::EntityComponentManager &_ecm)
 {
   if (!_info.paused && _info.iterations % 1000 == 0)
   {
-    igndbg << "robotverseny_gazebo::FullSystem::PostUpdate" << std::endl;
+    ignmsg << "robotverseny_gazebo::FullSystem::Update" << std::endl;
   }
 }
 
-}  // namespace ros_gz_example_gazebo
+void FullSystem::PostUpdate(const ignition::gazebo::UpdateInfo &_info,
+                            const ignition::gazebo::EntityComponentManager &_ecm) 
+{
+  if (!_info.paused && _info.iterations % 1000 == 0)
+  {
+    ignmsg << "robotverseny_gazebo::FullSystem::PostUpdate" << std::endl;
+  }
+}
+
+}  // namespace robotverseny_gazebo

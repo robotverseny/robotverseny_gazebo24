@@ -18,11 +18,11 @@
 // We'll use a string and the gzmsg command below for a brief example.
 // Remove these includes if your plugin doesn't need them.
 #include <string>
-#include <gz/common/Console.hh>
+#include <ignition/common/Console.hh>
 
 // This header is required to register plugins. It's good practice to place it
 // in the cc file, like it's done here.
-#include <gz/plugin/Register.hh>
+#include <ignition/plugin/Register.hh>
 
 // Don't forget to include the plugin's header.
 #include "robotverseny_gazebo/BasicSystem.hh"
@@ -31,19 +31,19 @@
 // what's in the header.
 IGNITION_ADD_PLUGIN(
     robotverseny_gazebo::BasicSystem,
-    gz::sim::System,
+    ignition::gazebo::System,
     robotverseny_gazebo::BasicSystem::ISystemPostUpdate)
 
 namespace robotverseny_gazebo 
 {
 
-void BasicSystem::PostUpdate(const gz::sim::UpdateInfo &_info,
-                             const gz::sim::EntityComponentManager &_ecm)
+void BasicSystem::PostUpdate(const ignition::gazebo::UpdateInfo &_info,
+                             const ignition::gazebo::EntityComponentManager &_ecm)
 {
   if (!_info.paused && _info.iterations % 1000 == 0)
   {
-    igndbg << "robotverseny_gazebo::BasicSystem::PostUpdate" << std::endl;
+    ignmsg << "robotverseny_gazebo::BasicSystem::PostUpdate" << std::endl;
   }
 }
 
-}  // namespace ros_gz_example_gazebo
+}  // namespace robotverseny_gazebo

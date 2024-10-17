@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<robot name="roboworks">
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <inertial>
+      <mass value="100"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.51286667" ixy="0" ixz="0" iyy="1.28568542" iyz="0" izz="1.71688542"/>
+    </inertial>
+  </link>
+
+  <!-- Chassis -->
+  <link name="chassis">
+    <inertial>
+      <mass value="100"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.51286667" ixy="0" ixz="0" iyy="1.28568542" iyz="0" izz="1.71688542"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5707 0 0"/>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/chassis.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.427451 0.470588 0.541176 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.17635 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.3865 0.238 0.07"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Front Left Wheel -->
+  <link name="front_left_wheel">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0.3187 0.161 0" rpy="-1.5707 0 0"/>
+      <inertia ixx="1.18520833" ixy="0" ixz="0" iyy="1.18520833" iyz="0" izz="0.78125"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/wheel.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.4 0.4 0.4 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.0625"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Front Left Tire -->
+  <link name="front_left_tire">
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/tire.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.01 0.01 0.01 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Front Right Wheel -->
+  <link name="front_right_wheel">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0.3187 -0.161 0" rpy="-1.5707 0 0"/>
+      <inertia ixx="1.18520833" ixy="0" ixz="0" iyy="1.18520833" iyz="0" izz="0.78125"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/wheel.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.4 0.4 0.4 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.0625"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Front Right Tire -->
+  <link name="front_right_tire">
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/tire.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.01 0.01 0.01 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Rear Left Wheel -->
+  <link name="rear_left_wheel">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0 0.161 0" rpy="-1.5707 0 0"/>
+      <inertia ixx="1.18520833" ixy="0" ixz="0" iyy="1.18520833" iyz="0" izz="0.78125"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/wheel.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.4 0.4 0.4 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.0625"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Rear Left Tire -->
+  <link name="rear_left_tire">
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/tire.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.01 0.01 0.01 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Rear Right Wheel -->
+  <link name="rear_right_wheel">
+    <inertial>
+      <mass value="1"/>
+      <origin xyz="0 -0.161 0" rpy="-1.5707 0 0"/>
+      <inertia ixx="1.18520833" ixy="0" ixz="0" iyy="1.18520833" iyz="0" izz="0.78125"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/wheel.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.4 0.4 0.4 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.04" radius="0.0625"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Rear Right Tire -->
+  <link name="rear_right_tire">
+    <visual>
+      <geometry>
+        <mesh filename="package://robotverseny_description/models/roboworks/meshes/tire.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="0.01 0.01 0.01 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Joints -->
+  <joint name="base_to_chassis" type="fixed">
+    <parent link="base_link"/>
+    <child link="chassis"/>
+  </joint>
+
+  <joint name="front_left_wheel_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="front_left_wheel"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="rear_left_wheel_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="rear_left_wheel"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="front_right_wheel_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="front_right_wheel"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="rear_right_wheel_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="rear_right_wheel"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <joint name="front_left_tire_joint" type="fixed">
+    <parent link="front_left_wheel"/>
+    <child link="front_left_tire"/>
+  </joint>
+
+  <joint name="front_right_tire_joint" type="fixed">
+    <parent link="front_right_wheel"/>
+    <child link="front_right_tire"/>
+  </joint>
+
+  <joint name="rear_left_tire_joint" type="fixed">
+    <parent link="rear_left_wheel"/>
+    <child link="rear_left_tire"/>
+  </joint>
+
+  <joint name="rear_right_tire_joint" type="fixed">
+    <parent link="rear_right_wheel"/>
+    <child link="rear_right_tire"/>
+  </joint>
+
+</robot>
