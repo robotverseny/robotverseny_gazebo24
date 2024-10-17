@@ -1,5 +1,5 @@
 ---
-- ros_topic_name: "/roboworks/cmd_vel"
+- ros_topic_name: "/cmd_vel"
   gz_topic_name: "roboworks/cmd_vel"
   ros_type_name: "geometry_msgs/msg/Twist"
   gz_type_name: "gz.msgs.Twist"
@@ -9,12 +9,12 @@
   ros_type_name: "rosgraph_msgs/msg/Clock"
   gz_type_name: "gz.msgs.Clock"
   direction: GZ_TO_ROS
-- ros_topic_name: "/roboworks/odometry"
+- ros_topic_name: "/odom_combined"
   gz_topic_name: "/model/roboworks/odometry"
   ros_type_name: "nav_msgs/msg/Odometry"
   gz_type_name: "gz.msgs.Odometry"
   direction: GZ_TO_ROS
-- ros_topic_name: "/roboworks/scan"
+- ros_topic_name: "/scan"
   gz_topic_name: "/scan"
   ros_type_name: "sensor_msgs/msg/LaserScan"
   gz_type_name: "gz.msgs.LaserScan"
@@ -38,5 +38,10 @@
   gz_topic_name: "/model/roboworks/pose_static"
   ros_type_name: "tf2_msgs/msg/TFMessage"
   gz_type_name: "gz.msgs.Pose_V"
+  direction: GZ_TO_ROS
+- ros_topic_name: "/mobile_base/sensors/imu_data"
+  gz_topic_name: "/mobile_base/sensors/imu_data"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
   direction: GZ_TO_ROS
 
