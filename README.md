@@ -61,12 +61,12 @@ ros2 launch robotverseny_bringup roboworks.launch.py rviz:=false
 
 Publish command topic:
 ``` bash
-ros2 topic pub --once /roboworks/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.01}}"
+ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.01}}"
 ```
 
 Teleop twist keyboard:
 ``` bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/roboworks/cmd_vel
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r /cmd_vel:=/cmd_vel
 ```
     
 Ignition info topic:
@@ -100,8 +100,8 @@ ros2 topic list
 /roboworks/cmd_vel
 /roboworks/odometry
 /roboworks/scan
-/roboworks/steer_marker
-/roboworks/steer_marker_array
+/steer_marker
+/steer_marker_array
 /rosout
 /tf
 /tf_static

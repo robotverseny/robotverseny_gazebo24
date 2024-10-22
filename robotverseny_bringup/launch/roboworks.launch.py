@@ -104,11 +104,11 @@ def generate_launch_description():
             output='screen',
             parameters=[
                 {'publish_steer_marker': True}, 
-                {'marker_topic': 'roboworks/steer_marker'},
+                {'marker_topic': 'steer_marker'},
                 {'marker_color': 'g'},
-                {'map_frame': 'map_roboworks'},
-                {'marker_frame': 'lidar_link'},
-                {'cmd_topic': 'roboworks/cmd_vel'},
+                {'map_frame': 'odom_combined'},
+                {'marker_frame': 'laser'},
+                {'cmd_topic': 'cmd_vel'},
                 {'use_sim_time': True},
                 ]
             )

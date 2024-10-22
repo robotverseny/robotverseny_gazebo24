@@ -345,7 +345,7 @@
 
 
 
-      <link name="laser_frame">
+      <link name="laser">
         <pose>0.25 0 0.094 0 0 0</pose>
       </link>
 
@@ -378,7 +378,7 @@
         <sensor name='gpu_lidar' type='gpu_lidar'>
           <pose>0 0 0 0 0 0</pose>
           <topic>scan</topic>
-          <ignition_frame_id>laser_frame</ignition_frame_id>
+          <ignition_frame_id>laser</ignition_frame_id>
           <update_rate>10</update_rate>
           <lidar>
             <scan>
@@ -435,7 +435,7 @@
 
       <joint name='lidar_frame_joint' type='fixed'>
         <parent>base_link</parent>
-        <child>laser_frame</child>
+        <child>laser</child>
       </joint>
 
       <joint name='base_link_joint' type='fixed'>

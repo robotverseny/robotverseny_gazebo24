@@ -26,13 +26,13 @@ public:
     PathAndSteer() : Node("path_steering_kmph_node")
     {
 
-        this->declare_parameter<std::string>("pose_frame", "roboworks/chassis");
+        this->declare_parameter<std::string>("pose_frame", "base_link");
         this->declare_parameter<std::string>("marker_topic", "marker_steering");
         this->declare_parameter<std::string>("path_topic", "marker_path");
         this->declare_parameter<std::string>("marker_color", "y");
         this->declare_parameter<std::string>("cmd_topic", "cmd_vel");
-        this->declare_parameter<std::string>("map_frame", "roboworks/odom");
-        this->declare_parameter<std::string>("marker_frame", "roboworks/chassis");
+        this->declare_parameter<std::string>("map_frame", "odom_combined");
+        this->declare_parameter<std::string>("marker_frame", "base_link");
         this->declare_parameter<bool>("publish_steer_marker", true);
         this->declare_parameter<bool>("publish_kmph", true);
         this->declare_parameter<int>("path_size", 1500);
@@ -60,6 +60,7 @@ public:
         // Call loop function 20 Hz (50 milliseconds)
         timer_ = this->create_wall_timer(std::chrono::milliseconds(50), std::bind(&PathAndSteer::loop, this));
         RCLCPP_INFO_STREAM(this->get_logger(), "Node started: " << this->get_name() << " publishing: " << marker_topic << " " << path_topic);
+        RCLCPP_INFO_STREAM(this->get_logger(), "Frames: " << current_map << " " << pose_frame << " " << marker_frame);
     }
 
 private:
@@ -201,8 +202,10 @@ private:
             int shift = path.poses.size() - path_size;
             path.poses.erase(path.poses.begin(), path.poses.begin() + shift);
         }
-
-        path_pub->publish(path);
+        if ((actual_pose.pose.position.x > 0.001 || actual_pose.pose.position.x < -0.001) && !std::isnan(actual_pose.pose.position.y) && !std::isinf(actual_pose.pose.position.y))
+        {
+            path_pub->publish(path);
+        }
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr sub_cmd_;

@@ -190,7 +190,7 @@
       <plugin
         filename="ignition-gazebo-odometry-publisher-system"
         name="ignition::gazebo::systems::OdometryPublisher">
-        <odom_frame>map_roboworks</odom_frame>
+        <odom_frame>odom_combined</odom_frame>
         <robot_base_frame>base_link</robot_base_frame>
       </plugin>
     </model>
