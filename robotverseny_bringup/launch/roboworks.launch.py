@@ -115,12 +115,23 @@ def generate_launch_description():
         ]
     )
 
+    # Static transform publisher betwwen map odom_combined (0,0,0)
+    static_map_to_odom = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_map_to_odom',
+        output='screen',
+        arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom_combined'],
+        parameters=[{'use_sim_time': True}]
+    )
+
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,
         robot_state_publisher,
         path_and_steer,
+        static_map_to_odom,
         rviz
     ])
 
