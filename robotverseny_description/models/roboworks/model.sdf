@@ -23,7 +23,7 @@
           <pose>0 0 0 1.5707 0 0</pose>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/chassis.dae</uri>
+              <uri>model://roboworks/meshes/chassis.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -58,7 +58,7 @@
         <visual name='visual_front_left_wheel'>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
+              <uri>model://roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -91,7 +91,7 @@
         <visual name='visual_front_left_tire'>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
+              <uri>model://roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -119,7 +119,7 @@
           <pose>0 0 0 -3.1415 0 0</pose>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
+              <uri>model://roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -152,7 +152,7 @@
         <visual name='visual_front_right_tire'>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
+              <uri>model://roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -179,7 +179,7 @@
         <visual name='visual_rear_left_wheel'>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
+              <uri>model://roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -212,7 +212,7 @@
         <visual name='visual_rear_left_tire'>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
+              <uri>model://roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -240,7 +240,7 @@
           <pose>0 0 0 3.1415 0 0</pose>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/wheel.dae</uri>
+              <uri>model://roboworks/meshes/wheel.dae</uri>
             </mesh>
           </geometry>
           <material>
@@ -273,7 +273,7 @@
         <visual name='visual_rear_right_tire'>
           <geometry>
             <mesh>
-              <uri>package://robotverseny_description/models/roboworks/meshes/tire.dae</uri>
+              <uri>model://roboworks/meshes/tire.dae</uri>
             </mesh>
           </geometry>
           <material>

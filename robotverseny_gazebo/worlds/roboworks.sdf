@@ -84,7 +84,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>package://robotverseny_description/models/roboworks/meshes/T1_OW.obj</uri>
+              <uri>model://roboworks/meshes/T1_OW.obj</uri>
             </mesh>
           </geometry>
           <surface>
@@ -99,7 +99,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>package://robotverseny_description/models/roboworks/meshes/T1_OW.obj</uri>
+              <uri>model://roboworks/meshes/T1_OW.obj</uri>
             </mesh>
           </geometry>
         </visual>
@@ -114,7 +114,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>package://robotverseny_description/models/roboworks/meshes/T1_L.obj</uri>
+              <uri>model://roboworks/meshes/T1_L.obj</uri>
             </mesh>
           </geometry>
           <surface>
@@ -129,7 +129,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>package://robotverseny_description/models/roboworks/meshes/T1_L.obj</uri>
+              <uri>model://roboworks/meshes/T1_L.obj</uri>
             </mesh>
           </geometry>
         </visual>
@@ -144,7 +144,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>package://robotverseny_description/models/roboworks/meshes/T1_R.obj</uri>
+              <uri>model://roboworks/meshes/T1_R.obj</uri>
             </mesh>
           </geometry>
           <surface>
@@ -159,7 +159,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>package://robotverseny_description/models/roboworks/meshes/T1_R.obj</uri>
+              <uri>model://roboworks/meshes/T1_R.obj</uri>
             </mesh>
           </geometry>
         </visual>
@@ -170,7 +170,7 @@
       <self_collide>true</self_collide>
       <pose>0.0 1.0 0.0625 0 -0 3.141596</pose>
       <include merge="true">
-        <uri>package://robotverseny_description/models/roboworks</uri>
+        <uri>model://roboworks</uri>
       </include>
 
       <plugin
