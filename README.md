@@ -1,6 +1,11 @@
-# robotverseny
+# robotverseny Gazebo simulation for `ROS 2`
 
 [![Static Badge](https://img.shields.io/badge/ROS_2-Humble-34aec5)](https://docs.ros.org/en/humble/)
+[![Static Badge](https://img.shields.io/badge/ROS_2-Jazzy-34aec5)](https://docs.ros.org/en/jazzy/)
+[![Static Badge](https://img.shields.io/badge/Gazebo-Fortress-red)](https://gazebosim.org/docs/fortress/)
+
+
+![robotverseny_gazebo24_anim](img/sim03.gif)
 
 
 ## Clone 
@@ -140,3 +145,14 @@ classDef white fill:#ffffff,stroke:#152742,stroke-width:2px,color:#152742
 classDef red fill:#ef4638,stroke:#152742,stroke-width:2px,color:#fff
 
 ```
+
+# Tutorials
+- [jkk-research.github.io/workshops/f1tenth_sim_a](https://jkk-research.github.io/workshops/f1tenth_sim_a/)
+- [sze-info.github.io/ajr/szimulacio/f1tenth_sim_a](https://sze-info.github.io/ajr/szimulacio/f1tenth_sim_a/)
+- [Video part 1](https://www.youtube.com/watch?v=90cVRC2Hd7Y)
+- [Video part 2](https://www.youtube.com/watch?v=ZlNOnPJfS9c)
+
+
+# Screenshots
+![robotverseny_gazebo24_screenshot01](img/sim04.png)
+![robotverseny_gazebo24_screenshot02](img/sim05.png)
