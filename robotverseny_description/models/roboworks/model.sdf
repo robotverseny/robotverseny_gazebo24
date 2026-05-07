@@ -343,8 +343,6 @@
         </sensor>
       </link>
 
-
-
       <link name="laser">
         <pose>0.25 0 0.094 0 0 0</pose>
       </link>
@@ -408,19 +406,19 @@
       <link name='imu_link'>
         <pose>0.25 0 0.094 0 0 0</pose>
         <sensor name="imu_sensor" type="imu">
-          <pose>0 0 0 0 0 0</pose> <!-- Position and orientation of the IMU in the link -->
+          <pose>0 0 0 0 0 0</pose> 
             <imu>
-              <topic>/mobile_base/sensors/imu_data</topic> <!-- ROS topic for the IMU data -->
-              <update_rate>100</update_rate> <!-- Frequency of data output in Hz -->
+              <topic>/mobile_base/sensors/imu_data</topic>
+              <update_rate>100</update_rate> 
               <always_on>true</always_on>
-              <visualize>true</visualize> <!-- Set to true if you want to visualize the sensor -->
+              <visualize>true</visualize> 
               <noise>
                 <type>gaussian</type>
                 <mean>0.0</mean>
                 <stddev>0.01</stddev>
               </noise>
             </imu>
-            </sensor>
+        </sensor>
       </link>
 
        <joint name='imu_joint' type='fixed'>
