@@ -21,35 +21,36 @@ from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import LaunchConfiguration
 
 from launch_ros.actions import Node
+from launch.actions import TimerAction
 
 
 def generate_launch_description():
     # Configure ROS nodes for launch
 
     # Setup project paths
-    pkg_project_bringup = get_package_share_directory('ros_gz_example_bringup')
-    pkg_project_gazebo = get_package_share_directory('ros_gz_example_gazebo')
-    pkg_project_description = get_package_share_directory('ros_gz_example_description')
+    pkg_project_bringup = get_package_share_directory('robotverseny_bringup')
+    pkg_project_gazebo = get_package_share_directory('robotverseny_gazebo')
+    pkg_project_description = get_package_share_directory('robotverseny_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_project_description, 'models', 'diff_drive', 'model.sdf')
+    sdf_file  =  os.path.join(pkg_project_description, 'models', 'roboworks', 'model.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
+
+
+    world_path = os.path.join(pkg_project_gazebo,'worlds/roboworks.sdf')
 
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': PathJoinSubstitution([
-            pkg_project_gazebo,
-            'worlds',
-            'diff_drive.sdf'
-        ])}.items(),
-    )
+        launch_arguments={'gz_args': [' -r -v 1 ' + world_path ], 'on_exit_shutdown': 'True' }.items())
+    ## -r means to run the simulation unpaused
+
 
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
     robot_state_publisher = Node(
@@ -63,30 +64,73 @@ def generate_launch_description():
         ]
     )
 
-    # Visualize in RViz
-    rviz = Node(
-       package='rviz2',
-       executable='rviz2',
-       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'diff_drive.rviz')],
-       condition=IfCondition(LaunchConfiguration('rviz'))
+    # Visualize in RViz with TimerAction to delay starting the node by X seconds (period)
+    rviz = TimerAction(
+        period=4.0,
+        actions=[
+            Node(
+                package='rviz2',
+                executable='rviz2',
+                arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'robotverseny.rviz')],
+                condition=IfCondition(LaunchConfiguration('rviz')),
+                parameters=[
+                    {'use_sim_time': True},
+                ]
+            )
+        ]
     )
 
     # Bridge ROS topics and Gazebo messages for establishing communication
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        parameters=[{
-            'config_file': os.path.join(pkg_project_bringup, 'config', 'ros_gz_example_bridge.yaml'),
+        parameters=[
+            {
+            'config_file': os.path.join(pkg_project_bringup, 'config', 'robotverseny_bridge.yaml'),
             'qos_overrides./tf_static.publisher.durability': 'transient_local',
-        }],
+            },
+            {'use_sim_time': True},
+        ],
         output='screen'
+    )
+
+    # Steering and path visualization in RViz with TimerAction to delay starting the node by X seconds (period)
+    path_and_steer = TimerAction(
+        period=3.0,
+        actions=[
+            Node(
+            package='robotverseny_bringup',
+            executable='path_and_steering',
+            output='screen',
+            parameters=[
+                {'publish_steer_marker': True}, 
+                {'marker_topic': 'steer_marker'},
+                {'marker_color': 'g'},
+                {'map_frame': 'odom_combined'},
+                {'marker_frame': 'laser'},
+                {'cmd_topic': 'cmd_vel'},
+                {'use_sim_time': True},
+                ]
+            )
+        ]
+    )
+
+    # Static transform publisher betwwen map odom_combined (0,0,0)
+    static_map_to_odom = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_map_to_odom',
+        output='screen',
+        arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom_combined'],
+        parameters=[{'use_sim_time': True}]
     )
 
     return LaunchDescription([
         gz_sim,
-        DeclareLaunchArgument('rviz', default_value='true',
-                              description='Open RViz.'),
+        DeclareLaunchArgument('rviz', default_value='true', description='Open RViz.'),
         bridge,
         robot_state_publisher,
+        path_and_steer,
+        static_map_to_odom,
         rviz
     ])
